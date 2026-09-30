@@ -1,299 +1,70 @@
-// // import React, { createContext, useContext, useEffect, useState } from "react";
-// // import api from "../../API/Axios";
-// // import { useAuth } from "./AuthContext";
-// // import { v4 as uuid } from "uuid";
-// // import { array } from "yup";
-
-
-// // const CartContext = createContext();
-
-// // export const CartProvider = ({ children }) => {
-// //     const { user, setUser } = useAuth();
-// //     const [cart, setCart] = useState({});
-// //     const [refreshcart, setRefreshcart] = useState(Math.random())
-
-
-// //     useEffect(() => {
-// //         if (!user) {
-// //             setCart({});
-// //             return;
-// //         }
-
-// //         api
-// //             .get(`/api/cart?userId=${user.id}`)
-// //             .then((res) => {
-// //                 setCart(res.data[0] || {});
-// //             })
-// //             .catch((err) => console.error(err));
-// //     }, [user, refreshcart]);
-
-
-
-// //     const saveCartToDB = async (items) => {
-// //         if (!user) return;
-// //         if (Object.keys(cart).length === 0) {
-// //             // create cart ONCE
-// //             await api.post("/api/cart", {
-// //                 userId: user.id,
-// //                 items
-// //             });
-
-// //         } else {
-// //             // update existing cart
-// //             await api.patch(`/api/cart/${cart.id}`, {
-// //                 items
-// //             });
-// //         }
-// //         setRefreshcart(Math.random())
-
-
-// //     };
-
-
-
-// //     // Add cart
-// //     const addToCart = async (book) => {
-// //         let updatedCart;
-
-// //         const exist = cart.items?.find((item) => item.id === book.id);
-// //         if (exist) {
-// //             updatedCart = cart.items?.map((item) =>
-// //                 item.id === book.id ? { ...item, qty: item.qty + 1 } : item
-// //             );
-// //         } else {
-// //             if (Array.isArray(cart.items)) {
-// //                 updatedCart = [...cart.items, { ...book, qty: 1 }];
-// //             } else {
-// //                 updatedCart = [{ ...book, qty: 1 }]
-// //             }
-// //         }
-
-
-// //         saveCartToDB(updatedCart);
-// //     };
-// //     // Remove cart
-// //     const removeFromCart = (id) => {
-// //         const updatedCart = cart.items?.filter((item) => item.id !== id);
-// //         setCart(updatedCart);
-// //         saveCartToDB(updatedCart);
-// //     };
-
-// //     // Increase qty
-// //     const increaseQty = (id) => {
-// //         const updatedCart = cart.items?.map((item) =>
-// //             item.id === id ? { ...item, qty: item.qty + 1 } : item
-// //         );
-// //         setCart(updatedCart);
-// //         saveCartToDB(updatedCart);
-
-// //     };
-
-// //     // Decrease qty
-// //     const decreaseQty = (id) => {
-// //         const updatedCart = cart.items?.map((item) =>
-// //             item.id === id && item.qty > 1
-// //                 ? { ...item, qty: item.qty - 1 }
-// //                 : item
-// //         );
-// //         setCart(updatedCart);
-// //         saveCartToDB(updatedCart);
-
-// //     };
-// //     // clear cart
-// //     const clearCart = () => {
-// //         setCart([]);
-// //         saveCartToDB([]);
-// //     };
-
-
-// //     return (
-// //         <CartContext.Provider
-// //             value={{ cart, addToCart, removeFromCart, increaseQty, decreaseQty, clearCart }}
-// //         >
-// //             {children}
-// //         </CartContext.Provider>
-// //     );
-// // };
-
-// // export const useCart = () => useContext(CartContext);
-
-
-// import React, { createContext, useContext, useEffect, useState } from "react";
-// import api from "../../API/Axios";
-// import { useAuth } from "./AuthContext";
-
-// const CartContext = createContext();
-
-// export const CartProvider = ({ children }) => {
-//     const { user } = useAuth();
-//     const [cart, setCart] = useState({});
-//     const [refreshcart, setRefreshcart] = useState(Math.random());
-//     useEffect(() => {
-//         console.log("user object:", user);
-//     }, [user]);
-//     // Fetch cart on login
-//     useEffect(() => {
-//         if (!user) {
-//             setCart({});
-//             return;
-//         }
-//         api
-//             .get(`/api/cart?userId=${user._id}`)
-//             .then((res) => {
-//                 setCart(res.data[0] || {});
-//             })
-//             .catch((err) => console.error(err));
-//     }, [user, refreshcart]);
-
-//     const saveCartToDB = async (items) => {
-//         if (!user) return;
-//         try {
-//             if (!cart._id) {
-//                 // No cart yet — create one
-//                 const res = await api.post("/api/cart", {
-//                     userId: user._id, items: cleanItems
-//                 });
-//                 setCart(res.data);
-//             } else {
-//                 // Cart exists — update it
-//                 const res = await api.patch(`/api/cart/${cart._id}`, { items });
-//                 setCart(res.data);
-//             }
-//             setRefreshcart(Math.random());
-//         } catch (err) {
-//             console.error("Cart save error:", err);
-//         }
-//     };
-
-//     // Add to cart
-//     // const addToCart = async (book) => {
-//     //     const exist = cart.items?.find((item) => item.book?._id === book._id);
-//     //     let updatedItems;
-
-//     //     if (exist) {
-//     //         // increase qty
-//     //         updatedItems = cart.items.map((item) =>
-//     //             item.book?._id === book._id ? { ...item, qty: item.qty + 1 } : item
-//     //         );
-//     //     } else {
-//     //         //  add cart
-//     //         const newItem = { book: book._id, qty: 1 };
-//     //         updatedItems = Array.isArray(cart.items)
-//     //             ? [...cart.items, newItem]
-//     //             : [newItem];
-//     //     }
-
-//     //     await saveCartToDB(updatedItems);
-//     // };
-
-
-//     const saveCartToDB = async (items) => {
-//         if (!user) return;
-//         try {
-//             // ✅ Define cleanItems here
-//             const cleanItems = items.map((item) => ({
-//                 book: item.book?._id || item.book,
-//                 qty: item.qty
-//             }));
-
-//             if (!cart._id) {
-//                 const res = await api.post("/api/cart", {
-//                     userId: user._id,
-//                     items: cleanItems // ✅ use cleanItems
-//                 });
-//                 setCart(res.data);
-//             } else {
-//                 const res = await api.patch(`/api/cart/${cart._id}`, {
-//                     items: cleanItems // ✅ use cleanItems
-//                 });
-//                 setCart(res.data);
-//             }
-//             setRefreshcart(Math.random());
-//         } catch (err) {
-//             console.error("Cart save error:", err);
-//         }
-//     };
-
-
-//     // Remove single item 
-//     const removeFromCart = async (id) => {
-//         const updatedItems = cart.items?.filter((item) => item.book?._id !== id);
-//         await saveCartToDB(updatedItems);
-//     };
-
-//     // Increase qty
-//     const increaseQty = async (id) => {
-//         const updatedItems = cart.items?.map((item) =>
-//             item.book?._id === id ? { ...item, qty: item.qty + 1 } : item
-//         );
-//         await saveCartToDB(updatedItems);
-//     };
-
-//     // Decrease qty — auto remove if qty hits 0
-//     const decreaseQty = async (id) => {
-//         const updatedItems = cart.items
-//             ?.map((item) =>
-//                 item.book?._id === id ? { ...item, qty: item.qty - 1 } : item
-//             )
-//             .filter((item) => item.qty > 0);
-//         await saveCartToDB(updatedItems);
-//     };
-
-//     // Clear entire cart — DELETE from DB
-//     const clearCart = async () => {
-//         if (!cart._id) return;
-//         try {
-//             await api.delete(`/api/cart/${cart._id}`);
-//             setCart({});
-//         } catch (err) {
-//             console.error("Clear cart error:", err);
-//         }
-//     };
-
-//     return (
-//         <CartContext.Provider
-//             value={{ cart, addToCart, saveCartToDB, removeFromCart, increaseQty, decreaseQty, clearCart }}
-//         >
-//             {children}
-//         </CartContext.Provider>
-//     );
-// };
-
-// export const useCart = () => useContext(CartContext);
-
-
 import React, { createContext, useContext, useEffect, useState } from "react";
 import api from "../../API/Axios";
 import { useAuth } from "./AuthContext";
 
-const CartContext = createContext();
+const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
     const { user } = useAuth();
-    const [cart, setCart] = useState({});
-
-    // Fetch cart on login
-    useEffect(() => {
-        if (!user) {
-            setCart({});
-            return;
+    
+    // Persistent Cart State
+    const [cart, setCart] = useState(() => {
+        try {
+            const saved = localStorage.getItem("readora_cart");
+            return saved ? JSON.parse(saved) : {};
+        } catch (e) {
+            return {};
         }
+    });
+
+    // Persistent Direct Buy Item State (for "Buy Now" flow)
+    const [directBuyItem, setDirectBuyItemState] = useState(() => {
+        try {
+            const saved = localStorage.getItem("readora_direct_buy");
+            return saved ? JSON.parse(saved) : null;
+        } catch (e) {
+            return null;
+        }
+    });
+
+    // Sync cart state with localStorage
+    useEffect(() => {
+        try {
+            if (cart && Object.keys(cart).length > 0) {
+                localStorage.setItem("readora_cart", JSON.stringify(cart));
+            }
+        } catch (e) {
+            console.error("Failed to save cart to localStorage", e);
+        }
+    }, [cart]);
+
+    // Fetch user cart on login
+    useEffect(() => {
+        if (!user?._id) return;
         api
             .get(`/api/cart?userId=${user._id}`)
             .then((res) => {
-
-                setCart(res.data || {});
-
+                if (res.data) {
+                    setCart(res.data);
+                    localStorage.setItem("readora_cart", JSON.stringify(res.data));
+                }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("Fetch cart error:", err));
     }, [user?._id]);
 
+    // Save cart to DB
     const saveCartToDB = async (items) => {
-        if (!user) return;
+        if (!user?._id) {
+            // Guest mode fallback
+            const localCart = { ...cart, items };
+            setCart(localCart);
+            localStorage.setItem("readora_cart", JSON.stringify(localCart));
+            return;
+        }
         try {
             const cleanItems = items.map((item) => ({
                 book: item.book?._id || item.book,
-                qty: item.qty
+                qty: item.qty || 1
             }));
 
             if (!cart._id) {
@@ -302,72 +73,116 @@ export const CartProvider = ({ children }) => {
                     items: cleanItems
                 });
                 setCart(res.data);
+                localStorage.setItem("readora_cart", JSON.stringify(res.data));
             } else {
                 const res = await api.patch(`/api/cart/${cart._id}`, {
                     items: cleanItems
                 });
                 setCart(res.data);
+                localStorage.setItem("readora_cart", JSON.stringify(res.data));
             }
         } catch (err) {
             console.error("Cart save error:", err);
         }
     };
 
+    // Add to cart
     const addToCart = async (book) => {
-        const exist = cart.items?.find((item) => item.book?._id === book._id);
+        if (!book) return;
+        const exist = cart.items?.find((item) => (item.book?._id || item.book) === (book._id || book.id));
         let updatedItems;
 
         if (exist) {
             updatedItems = cart.items.map((item) =>
-                item.book?._id === book._id ? { ...item, qty: item.qty + 1 } : item
+                (item.book?._id || item.book) === (book._id || book.id)
+                    ? { ...item, qty: item.qty + 1 }
+                    : item
             );
         } else {
-            const newItem = { book: book._id, qty: 1 };
-            updatedItems = Array.isArray(cart.items)
-                ? [...cart.items, newItem]
-                : [newItem];
+            const newItem = { book: book._id ? book : book, qty: 1 };
+            updatedItems = Array.isArray(cart.items) ? [...cart.items, newItem] : [newItem];
         }
+
         await saveCartToDB(updatedItems);
     };
 
+    // Remove from cart
     const removeFromCart = async (id) => {
-        const updatedItems = cart.items?.filter((item) => item.book?._id !== id);
+        const updatedItems = cart.items?.filter((item) => (item.book?._id || item.book) !== id);
         await saveCartToDB(updatedItems);
     };
 
+    // Increase qty
     const increaseQty = async (id) => {
         const updatedItems = cart.items?.map((item) =>
-            item.book?._id === id ? { ...item, qty: item.qty + 1 } : item
+            (item.book?._id || item.book) === id ? { ...item, qty: item.qty + 1 } : item
         );
         await saveCartToDB(updatedItems);
     };
 
+    // Decrease qty
     const decreaseQty = async (id) => {
         const updatedItems = cart.items
             ?.map((item) =>
-                item.book?._id === id ? { ...item, qty: item.qty - 1 } : item
+                (item.book?._id || item.book) === id ? { ...item, qty: item.qty - 1 } : item
             )
             .filter((item) => item.qty > 0);
         await saveCartToDB(updatedItems);
     };
 
+    // Clear cart
     const clearCart = async () => {
-        if (!cart._id) return;
-        try {
-            await api.delete(`/api/cart/${cart._id}`);
-            setCart({});
-        } catch (err) {
-            console.error("Clear cart error:", err);
+        setCart({});
+        localStorage.removeItem("readora_cart");
+        if (cart._id) {
+            try {
+                await api.delete(`/api/cart/${cart._id}`);
+            } catch (err) {
+                console.error("Clear cart error:", err);
+            }
         }
+    };
+
+    // Direct Buy Handlers ("Buy Now" flow)
+    const setDirectBuy = (book) => {
+        if (!book) return;
+        const item = {
+            book: book,
+            qty: 1,
+            price: book.price || 0
+        };
+        setDirectBuyItemState(item);
+        localStorage.setItem("readora_direct_buy", JSON.stringify(item));
+    };
+
+    const clearDirectBuy = () => {
+        setDirectBuyItemState(null);
+        localStorage.removeItem("readora_direct_buy");
     };
 
     return (
         <CartContext.Provider
-            value={{ cart, addToCart, removeFromCart, increaseQty, decreaseQty, clearCart }}
+            value={{
+                cart,
+                directBuyItem,
+                setDirectBuy,
+                clearDirectBuy,
+                addToCart,
+                removeFromCart,
+                increaseQty,
+                decreaseQty,
+                clearCart
+            }}
         >
             {children}
         </CartContext.Provider>
     );
 };
 
-export const useCart = () => useContext(CartContext);
+export const useCart = () => {
+    const context = useContext(CartContext);
+    if (!context) {
+        throw new Error("useCart must be used within a CartProvider");
+    }
+    return context;
+};

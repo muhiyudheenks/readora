@@ -29,59 +29,63 @@ function Hero() {
     }, [])
 
     return (
-        <div className='relative overflow-hidden min-h-[500px] sm:min-h-[650px] bg-gradient-to-br from-[#0a0a0f] to-[#12121a] flex justify-center items-center duration-200'>
+        <div className='relative overflow-hidden min-h-[500px] sm:min-h-[600px] lg:min-h-[650px] bg-gradient-to-br from-slate-50 via-indigo-50/40 to-slate-100 dark:from-[#0a0a0f] dark:via-[#0f101b] dark:to-[#141526] flex justify-center items-center transition-colors duration-300 py-8 sm:py-12'>
             {/* Glowing background orbs for subtle premium feel */}
-            <div className='absolute top-[-20%] left-[-10%] w-[40vw] h-[40vw] bg-primary/20 rounded-full blur-[120px] z-0'></div>
-            <div className='absolute bottom-[-20%] right-[-10%] w-[30vw] h-[30vw] bg-secondary/20 rounded-full blur-[100px] z-0'></div>
+            <div className='absolute top-[-10%] left-[-5%] w-[50vw] h-[50vw] max-w-[500px] max-h-[500px] bg-indigo-500/10 dark:bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none'></div>
+            <div className='absolute bottom-[-10%] right-[-5%] w-[40vw] h-[40vw] max-w-[400px] max-h-[400px] bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full blur-[100px] pointer-events-none'></div>
 
             {/* hero section */}
-            <div className='container px-4 pb-8 sm:pb-0 z-10'>
+            <div className='container mx-auto px-4 z-10'>
                 <Slider {...settings}>
                     {Array.isArray(hero) && hero.map((item) => (
                         <div key={item.id}>
-                            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 items-center'>
+                            <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-4'>
                                 {/* content section */}
-                                <div className='flex flex-col justify-center gap-6 text-center sm:text-left order-2 sm:order-1 relative z-10'>
+                                <div className='flex flex-col justify-center gap-5 sm:gap-6 text-center lg:text-left order-2 lg:order-1 relative z-10 px-2 sm:px-0'>
+                                    <span className="inline-flex items-center gap-2 self-center lg:self-start px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide uppercase bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60 w-fit">
+                                        ✨ Featured Release
+                                    </span>
                                     <h1
                                         data-aos="zoom-out"
                                         data-aos-once="true"
                                         data-aos-duration="500"
-                                        className='text-4xl sm:text-6xl lg:text-7xl font-extrabold text-gradient drop-shadow-[0_0_10px_rgba(108,99,255,0.4)] leading-tight'
+                                        className='text-3xl sm:text-5xl lg:text-6xl font-serif font-extrabold text-slate-900 dark:text-slate-100 leading-tight tracking-tight'
                                     >
-                                        {item.title}
+                                        <span className="text-gradient block">{item.title}</span>
                                     </h1>
                                     <p
                                         data-aos="fade-up"
                                         data-aos-once="true"
                                         data-aos-delay="100"
-                                        className='text-base sm:text-lg text-textSecondary max-w-lg mx-auto sm:mx-0'
+                                        className='text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed'
                                     >
                                         {item.description}
                                     </p>
-                                    <div data-aos="fade-up" data-aos-once="true" data-aos-delay="300" className='mt-2'>
+                                    <div data-aos="fade-up" data-aos-once="true" data-aos-delay="300" className='mt-2 flex justify-center lg:justify-start'>
                                         {user ? (
-                                            <h1 className='inline-block bg-gradient-to-r from-primary to-secondary text-white py-3 px-8 rounded-full font-bold text-xl sm:text-2xl shadow-[0_0_20px_rgba(108,99,255,0.6)]'>
-                                                Welcome {user.name}
-                                            </h1>
+                                            <div className='inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 text-white py-3 px-7 rounded-full font-bold text-base sm:text-lg shadow-lg shadow-indigo-500/25'>
+                                                <span>Welcome back, {user.name}!</span>
+                                            </div>
                                         ) : (
                                             <button
                                                 onClick={() => navigate('/signup')}
-                                                className='bg-gradient-to-r from-primary to-secondary hover:shadow-[0_0_25px_rgba(108,99,255,0.8)] text-white font-bold py-3 px-8 rounded-full hover:scale-105 transition-all duration-300'
+                                                className='bg-gradient-to-r from-indigo-600 to-cyan-500 hover:from-indigo-500 hover:to-cyan-400 text-white font-bold py-3.5 px-8 rounded-full shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 text-sm sm:text-base touch-target'
                                             >
-                                                Explore Now
+                                                Explore Collection
                                             </button>
                                         )}
                                     </div>
                                 </div>
 
                                 {/* image section */}
-                                <div className='order-1 sm:order-2 flex justify-center'>
-                                    <div data-aos="zoom-in" data-aos-once="true" className='relative z-10 p-6 animate-[float_6s_ease-in-out_infinite]'>
+                                <div className='order-1 lg:order-2 flex justify-center'>
+                                    <div data-aos="zoom-in" data-aos-once="true" className='relative z-10 p-4 sm:p-6 animate-[float_6s_ease-in-out_infinite]'>
+                                        <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-cyan-500/20 rounded-2xl blur-xl transform scale-95"></div>
                                         <img
                                             src={item.img}
                                             alt={item.title}
                                             onError={(e) => (e.target.src = "/hero/image1.webp")}
-                                            className='w-[200px] h-[300px] sm:h-[450px] sm:w-[300px] object-cover rounded-xl mx-auto shadow-[0_20px_50px_rgba(108,99,255,0.5)] border border-dark-border group-hover:shadow-[0_20px_60px_rgba(0,212,255,0.6)] transition-all duration-500'
+                                            className='w-[180px] h-[270px] sm:w-[240px] sm:h-[360px] lg:w-[280px] lg:h-[420px] object-cover rounded-2xl mx-auto shadow-2xl border border-white/20 dark:border-slate-800/80 transition-all duration-500 hover:scale-105'
                                         />
                                     </div>
                                 </div>
@@ -91,10 +95,10 @@ function Hero() {
                 </Slider>
             </div>
 
-            <style jsx>{`
+            <style>{`
                 @keyframes float {
                     0% { transform: translateY(0px); }
-                    50% { transform: translateY(-20px); }
+                    50% { transform: translateY(-16px); }
                     100% { transform: translateY(0px); }
                 }
             `}</style>

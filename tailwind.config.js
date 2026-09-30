@@ -16,13 +16,22 @@ export default {
         textSecondary: "#a0a0b0",
       },
       fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
         inter: ['Inter', 'sans-serif'],
+      },
+      boxShadow: {
+        'glow-primary': '0 0 20px rgba(108, 99, 255, 0.35)',
+        'glow-secondary': '0 0 20px rgba(0, 212, 255, 0.35)',
+        'card-light': '0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.02)',
+        'card-dark': '0 8px 30px -4px rgba(0, 0, 0, 0.5), 0 4px 12px -2px rgba(0, 0, 0, 0.3)',
       },
       container: {
         center: true,
         padding: {
           DEFAULT: "1rem",
-          sm: "3rem",
+          sm: "2rem",
+          lg: "3rem",
         },
       },
     },

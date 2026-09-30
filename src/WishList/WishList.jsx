@@ -7,48 +7,49 @@ function WishList() {
 
 
     return (
-        <>
-            <div className="max-w-5xl mx-auto p-20">
-                <h1 className="text-3xl font-bold mb-6">Your Wishlist</h1>
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0f] py-12 px-4 transition-colors duration-300">
+            <div className="max-w-3xl mx-auto">
+                <h1 className="text-3xl font-serif font-bold text-slate-900 dark:text-slate-100 mb-8">Your Wishlist</h1>
                 {wishList.length === 0 ? (
-                    <p>
-                        Wishlist is empty.{" "}
-                        <Link to="/products" className="text-amber-600 underline">
-                            Shop now
+                    <div className="text-center py-20 bg-white dark:bg-[#12131c] rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <div className="text-5xl mb-4">💝</div>
+                        <h2 className="text-xl font-semibold text-slate-700 dark:text-slate-300 mb-2">Your wishlist is empty</h2>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">Save books you love to revisit later.</p>
+                        <Link to="/books" className="inline-block bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-semibold px-6 py-3 rounded-xl text-sm hover:scale-[1.02] transition-all duration-200 shadow-md">
+                            Explore Books
                         </Link>
-                    </p>
+                    </div>
                 ) : (
-                    <ul className="space-y-4">
+                    <div className="space-y-4">
                         {wishList.map(item => (
-                            <li
-                                key={item.id}
-                                className="flex items-center justify-between bg-white p-4 rounded shadow"
+                            <div
+                                key={item._id || item.id}
+                                className="flex items-center gap-4 bg-white dark:bg-[#12131c] border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200"
                             >
-                                <div className="flex items-center gap-4">
+                                <Link to={`/bookdetailes/${item._id}`}>
                                     <img
                                         src={item.img}
                                         alt={item.title}
-                                        className="w-20 h-20 object-contain"
+                                        className="w-16 h-22 sm:w-20 sm:h-28 object-cover rounded-xl flex-shrink-0 shadow-sm hover:scale-105 transition-transform duration-200"
                                     />
-                                    <div>
-                                        <h3 className="font-semibold">{item.title}</h3>
-
-                                        <p className="text-amber-600 font-bold">₹ {item.price}</p>
-                                    </div>
+                                </Link>
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="font-semibold text-slate-900 dark:text-slate-100 truncate">{item.title}</h3>
+                                    <p className="text-slate-500 dark:text-slate-400 text-sm">{item.author}</p>
+                                    <p className="text-indigo-600 dark:text-indigo-400 font-bold mt-1">₹{item.price}</p>
                                 </div>
-
                                 <button
-                                    onClick={() => removeFromWishList(item.id)}
-                                    className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700"
+                                    onClick={() => removeFromWishList(item._id || item.id)}
+                                    className="flex-shrink-0 bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-800/40 px-4 py-2 rounded-xl text-sm font-medium hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors duration-200 touch-target"
                                 >
                                     Remove
                                 </button>
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 )}
             </div>
-        </>
+        </div>
     );
 }
 

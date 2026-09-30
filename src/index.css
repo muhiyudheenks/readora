@@ -1,21 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   body {
-    @apply font-inter bg-dark-bg text-textPrimary antialiased selection:bg-primary/30 selection:text-white transition-colors duration-300;
+    @apply font-sans bg-slate-50 text-slate-900 dark:bg-[#0a0a0f] dark:text-slate-100 antialiased selection:bg-primary/30 selection:text-primary transition-colors duration-300 min-h-screen overflow-x-hidden;
+  }
+
+  h1, h2, h3, .font-serif-heading {
+    @apply font-serif tracking-tight;
   }
 }
 
-/* Custom Utilities that might be handy */
 @layer utilities {
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-cyan-500 dark:from-indigo-400 dark:via-purple-400 dark:to-cyan-400;
   }
   .bg-glass {
-    @apply bg-[#0a0a0f]/80 backdrop-blur-md border-b border-dark-border;
+    @apply bg-white/80 dark:bg-[#0a0a0f]/80 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80;
   }
+  .bg-glass-card {
+    @apply bg-white/70 dark:bg-[#12121a]/80 backdrop-blur-lg border border-slate-200/80 dark:border-slate-800/80 shadow-card-light dark:shadow-card-dark;
+  }
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-700/60 rounded-full hover:bg-slate-400 dark:hover:bg-slate-600 transition-colors;
 }

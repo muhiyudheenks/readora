@@ -20,41 +20,40 @@ function Allcategory() {
     const currentitems = book.slice(firstindex, lastindex);
     const totalpages = Math.ceil(book.length / itemsperpage)
     return (
-        <div className='mt-14 mb-12'>
-            <div className='container'>
-                {/* header section */}
-                <div className='text-center mb-14 max-w-[600px] mx-auto'>
-                    <h1 data-aos="fade-up" className='text-4xl font-extrabold text-gradient mb-4 drop-shadow-[0_0_10px_rgba(108,99,255,0.3)]'>
+        <div className='py-14 sm:py-16 bg-slate-50 dark:bg-[#0a0a0f] transition-colors duration-300'>
+            <div className='container mx-auto px-4'>
+                {/* Header */}
+                <div className='text-center mb-12 max-w-2xl mx-auto'>
+                    <h1 data-aos="fade-up" className='text-3xl sm:text-4xl font-serif font-extrabold text-gradient mb-4'>
                         All Categories
                     </h1>
-                    <p data-aos="fade-up" data-aos-delay="100" className='text-sm text-textSecondary'>
+                    <p data-aos="fade-up" data-aos-delay="100" className='text-sm text-slate-500 dark:text-slate-400 leading-relaxed'>
                         Discover books that inspire, educate, and transport you to new worlds. Readora is your modern home for stories, knowledge, and imagination.
                     </p>
                 </div>
 
-                {/* body section */}
-                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 place-items-center'>
-                    {/* card section */}
+                {/* Grid */}
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 place-items-center'>
                     {currentitems.map((data) => (
                         <div key={data._id}
                             data-aos="fade-up"
                             data-aos-delay={data.aosDelay}
-                            className='group bg-dark-card border border-dark-border p-6 rounded-2xl w-full max-w-[320px] hover:-translate-y-2 hover:border-primary hover:shadow-[0_10px_30px_rgba(108,99,255,0.2)] transition-all duration-300 flex flex-col items-center text-center'
+                            className='group bg-white dark:bg-[#12131c] border border-slate-200 dark:border-slate-800 p-6 rounded-2xl w-full max-w-[320px] hover:-translate-y-2 hover:border-indigo-300 dark:hover:border-indigo-700/60 hover:shadow-xl dark:hover:shadow-indigo-900/20 transition-all duration-300 flex flex-col items-center text-center'
                         >
                             <div className="relative mb-5 overflow-visible">
                                 <img src={data.img}
-                                    className='h-[240px] w-[160px] object-cover rounded-xl shadow-[0_10px_20px_rgba(0,0,0,0.5)] group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(108,99,255,0.5)] transition-all duration-500'
-                                    alt={data.type} 
+                                    className='h-[220px] w-[150px] object-cover rounded-2xl shadow-lg group-hover:scale-105 transition-all duration-500'
+                                    alt={data.type}
                                 />
                             </div>
-                            
+
                             <div className="flex flex-col flex-grow w-full">
-                                <h3 className='font-bold text-xl text-textPrimary mb-2 group-hover:text-secondary transition-colors duration-300'>{data.type}</h3>
-                                <p className='text-sm text-textSecondary font-medium mb-3'>by {data.author}</p>
-                                <p className='text-xs text-textSecondary mb-6 line-clamp-2'>{data.description}</p>
+                                <h3 className='font-bold text-lg text-slate-900 dark:text-slate-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200'>{data.type}</h3>
+                                <p className='text-sm text-slate-500 dark:text-slate-400 font-medium mb-2'>by {data.author}</p>
+                                <p className='text-xs text-slate-400 dark:text-slate-500 mb-5 line-clamp-2 leading-relaxed'>{data.description}</p>
 
                                 <button onClick={() => navigate(`/books/${encodeURIComponent(data.category)}`)}
-                                    className="mt-auto border border-primary text-primary hover:bg-primary hover:text-white hover:shadow-[0_0_15px_#6c63ff] py-2 px-6 rounded-full font-medium transition-all duration-300 w-full"
+                                    className="mt-auto border border-indigo-500/50 text-indigo-600 dark:text-indigo-400 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-cyan-500 hover:text-white hover:border-transparent py-2.5 px-6 rounded-xl font-semibold text-sm transition-all duration-300 w-full touch-target"
                                 >
                                     View Category
                                 </button>
@@ -63,16 +62,16 @@ function Allcategory() {
                     ))}
                 </div>
 
-                {/* pagination */}
-                <div className="flex justify-center gap-3 mt-14">
+                {/* Pagination */}
+                <div className="flex justify-center gap-2 mt-12">
                     {[...Array(totalpages)].map((_, index) => (
                         <button
                             key={index}
                             onClick={() => setCurrentpage(index + 1)}
-                            className={`w-10 h-10 rounded-full font-medium transition-all duration-300 ${
+                            className={`w-9 h-9 rounded-full text-sm font-semibold transition-all duration-200 ${
                                 currentpage === index + 1
-                                    ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-[0_0_15px_rgba(108,99,255,0.5)]'
-                                    : 'bg-dark-card border border-dark-border text-textSecondary hover:border-primary hover:text-primary'
+                                    ? 'bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-md'
+                                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 border border-slate-200 dark:border-slate-700'
                             }`}
                         >
                             {index + 1}
